@@ -188,6 +188,7 @@ class Notification extends Component<NotificationProps, NotificationState> {
 
     return (
       <div className={classNames(prefixCls, className)} style={style}>
+        {/* 当 noticeKeys 长度为0时候, CSSMotionList 只会渲染出一个空的 div */}
         <CSSMotionList
           keys={noticeKeys}
           motionName={this.getTransitionName()}
@@ -197,6 +198,7 @@ class Notification extends Component<NotificationProps, NotificationState> {
             }
           }}
         >
+          {/*下面的函数式组件 children 最终会作为 CSSMotion 的 children 渲染出动画 */}
           {({ key, className: motionClassName, style: motionStyle, visible }) => {
             const { props: noticeProps, holderCallback } = this.noticePropsMap[key];
             if (holderCallback) {
@@ -235,6 +237,8 @@ class Notification extends Component<NotificationProps, NotificationState> {
     );
   }
 }
+// class 方法, 调用时候会在 body 上挂一个空的 div, 作为 Notice 组件的 wrapper
+// 之后调用 render(<Notification {...props} ref={ref} />, div) 渲染 Notification 组件
 Notification.newInstance = function newNotificationInstance(properties, callback) {
   const { getContainer, ...props } = properties || {};
   const div = document.createElement('div');
@@ -246,6 +250,7 @@ Notification.newInstance = function newNotificationInstance(properties, callback
   }
   let called = false;
   function ref(notification: Notification) {
+    // 闭包保证只调用一次
     if (called) {
       return;
     }
@@ -281,6 +286,7 @@ Notification.newInstance = function newNotificationInstance(properties, callback
   // you pass a function. The function receives the React component instance or HTML DOM element as its argument
   // React will call the ref callback with the DOM element when the component mounts, and call it with null when it unmounts.
   // const root = React.createRoot()  ,root上面有个render方法，下面这个 rc-util 中的render主要是为了兼容新老react版本
+  // class 组件，可以直接使用 ref 进行引用
   render(<Notification {...props} ref={ref} />, div);
 };
 

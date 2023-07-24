@@ -20,6 +20,7 @@ const NOTICE = {
 };
 
 const Demo = () => {
+  // holder 是一个 React.Fragment
   const [notice, holder] = notificationInstance.useNotification();
 
   return (
@@ -40,6 +41,7 @@ const Demo = () => {
       >
         simple show
       </button>
+      {/*holder 是一个 React.Fragment*/}
       {holder}
     </Context.Provider>
   );

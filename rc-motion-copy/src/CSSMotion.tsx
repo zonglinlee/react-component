@@ -183,7 +183,8 @@ export function genCSSMotion(
     // ===================== Render =====================
     let motionChildren: React.ReactNode;
     const mergedProps = { ...eventProps, visible };
-
+    // children 是一个函数式组件，需要调用传入 props ,返回值是 React.ReactNode
+    // 正常组件比如 <MyCustomCard name="my card" />, 挂载的时候就会传入 props, 并调用组件
     if (!children) {
       // No children
       motionChildren = null;

@@ -11,7 +11,7 @@ interface DemoState {
 
 class App extends React.Component<{}, DemoState> {
   state: DemoState = {
-    count: 1,
+    count: 5,
     checkedMap: {},
     keyList: [],
   };
